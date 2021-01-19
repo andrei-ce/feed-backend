@@ -51,12 +51,7 @@ app.use((req, res, next) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //____routes
-const feedRoutes = require('./routes/feed');
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
-app.use('/feed', feedRoutes);
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
+//___graphQL: we will now have query, mutation, subscription(not this last one) definitions
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -73,11 +68,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((result) => {
-    const server = app.listen(8080, () => console.log('Listening on port 8080...'));
-    const io = require('./socket').init(server);
-    //listen to every connection requested:
-    io.on('connection', (socket) => {
-      console.log('New client connected to socket!');
-    });
+    app.listen(8080, () => console.log('Listening on port 8080...'));
   })
   .catch((error) => console.log(error));
