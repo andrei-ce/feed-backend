@@ -70,11 +70,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((result) => {
-    const server = app.listen(8080, () => console.log('Listening on port 8080...'));
-    const io = require('./socket').init(server);
-    //listen to every connection requested:
-    io.on('connection', (socket) => {
-      console.log('New client connected to socket!');
-    });
+    app.listen(8080, () => console.log('Listening on port 8080...'));
   })
   .catch((error) => console.log(error));
