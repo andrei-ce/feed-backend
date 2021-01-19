@@ -1,0 +1,4 @@
+{
+  "MONGO_URI": "mongodb+srv://dev:x83iBbjZ8YGNQ0jA@chatapp.aoqvr.mongodb.net/blogs?retryWrites=true&w=majority",
+  "JWT_SECRET": "AU8hdub92p7AUsO02HF08Yfg"
+}
