@@ -50,13 +50,10 @@ app.use((req, res, next) => {
 //____static folders
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-//____routes
-const feedRoutes = require('./routes/feed');
-const authRoutes = require('./routes/auth');
-const userRoutes = require('./routes/user');
-app.use('/feed', feedRoutes);
-app.use('/auth', authRoutes);
-app.use('/user', userRoutes);
+//____routes (definitions for graphQL)
+// ...
+// ...
+// ...
 
 app.use((error, req, res, next) => {
   console.log(error);
