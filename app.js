@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 const config = require('config');
 const path = require('path');
 const multer = require('multer');
+const { ApolloServer } = require('apollo-server-express');
+const typeDefs = require('./graphql/schema');
+const resolvers = require('./graphql/resolvers');
 
 //____initialize express
 const app = express();
@@ -36,6 +39,9 @@ const fileFilter = (req, file, cb) => {
 app.use(bodyParser.json()); // application/json
 app.use(multer({ storage: fileStorage, fileFilter }).single('image'));
 
+//static folders
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 //CORS solution:
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -47,11 +53,10 @@ app.use((req, res, next) => {
   next();
 });
 
-//____static folders
-app.use('/images', express.static(path.join(__dirname, 'images')));
+//____routes (definitions for graphQL)
 
-//____routes
-//___graphQL: we will now have query, mutation, subscription(not this last one) definitions
+const apollo = new ApolloServer({ typeDefs, resolvers });
+apollo.applyMiddleware({ app });
 
 app.use((error, req, res, next) => {
   console.log(error);
@@ -68,6 +73,12 @@ mongoose
     useUnifiedTopology: true,
   })
   .then((result) => {
-    app.listen(8080, () => console.log('Listening on port 8080...'));
+    app.listen(8080, () => {
+      console.log(`Server listening on port 8000...`);
+      console.log(`Press Cmd+C to exit`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`Apollo playground available at http://localhost:8080/graphql`);
+      }
+    });
   })
   .catch((error) => console.log(error));

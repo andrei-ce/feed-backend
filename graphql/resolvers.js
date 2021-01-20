@@ -1,6 +1,11 @@
 const resolvers = {
   Query: {
-    hello: () => 'Hello world!',
+    hello: () => ({
+      name: 'Albie',
+      email: 'abc@email.com',
+      password: 1234,
+      status: 'Sleeping',
+    }),
   },
 };
 
