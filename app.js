@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const path = require('path');
 const multer = require('multer');
+const { graphqlHttp } = require('express-graphql');
 
 //____initialize express
 const app = express();
